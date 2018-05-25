@@ -30,259 +30,167 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-/*var myTabs = TabNavigator({
-	Tab1: {screen: buysellscreen}
-}); */
-
-
 export default class Home extends Component<{}> {
 
   constructor(props) {
-    super(props);
-    var today = new Date ()
-    //console.log(currenthour + 1)
-    var day = parseInt(today.getMonth()+1)
-    var realday;
-    if (day < 10) {
-      realday = '0'+ parseInt(today.getMonth()+1).toString()
-    }
-    else {
-      realday = parseInt(today.getMonth()+1).toString()
-    }
-    var date1
-    if (today.getDate() < 10) {
-      date1 = today.getFullYear() + '-' + realday + '-0' + today.getDate()
-  }
-  else {
-      date1 = today.getFullYear() + '-' + realday + '-' + today.getDate()
-  }
-    var test1 = moment(date1).format('DATE_RFC2822')
-    console.log (test1)
-    var dayofweek1 = test1.substring(5,6)
-    if (today.getDate() < 10) {
-      dayofweek1 = test1.substring(4,5)
-    }
-    console.log(dayofweek1)
-    //date1 = '2018-03-30' //TEST ONLY! REMOVE AFTER
-    //dayofweek1 = '6' //TEST! PLEASE REMOVE
+      super(props);
+      var today = new Date () //get the current date into correct format
+      var day = parseInt(today.getMonth()+1)
+      var realday;
+      if (day < 10) {
+        realday = '0'+ parseInt(today.getMonth()+1).toString()
+      }
+      else {
+        realday = parseInt(today.getMonth()+1).toString()
+      }
+      var date1
+      if (today.getDate() < 10) {
+        date1 = today.getFullYear() + '-' + realday + '-0' + today.getDate()
+      }
+      else {
+        date1 = today.getFullYear() + '-' + realday + '-' + today.getDate()
+      }
+      var test1 = moment(date1).format('DATE_RFC2822')
+      console.log (test1)
+      var dayofweek1 = test1.substring(5,6)
+      if (today.getDate() < 10) {
+        dayofweek1 = test1.substring(4,5)
+      }
+      console.log(dayofweek1)
 
-    //recompute date if on weekend, just pure calculation function
-    /*if (dayofweek1 == '6' || dayofweek1 == '7') {
-      if (dayofweek1 == '6') {
-        var d = today.getDate()
-        var m = today.getMonth() + 1
-        var y = today.getFullYear()
-          if (d == 1 && m == 1) {
-            y = y - 1
-            date1 = y + '-' + '12' + '-' + '31'
-          }
-          else if (d == 1 && (m == 1 || m == 5|| m == 7|| m == 10|| m == 12)) {
-            m = m - 1
-            date1 = today.getFullYear()+'-'+ m + '-' + '30'
-          }
-          else if (d == 1 && ( m == 4 || m == 6|| m == 9|| m == 11 || m == 8)) {
-            m = m - 1
-            date1 = today.getFullYear()+'-'+ m + '-' + '31'
-          }
-          else if (d == 1 && ( m == 3)) {
-            m = m - 1
-            if (y%4 == 0){
-              date1 = today.getFullYear()+'-'+ m + '-' + '29'
-            }
-            else {
-              date1 = today.getFullYear()+'-'+ m + '-' + '28'
-            }
-          }
-          else {
-            m = m - 1
-            date1 = today.getFullYear() + '-' + m.toString() + '-' + today.getDate()
-          }
-      }
-      if (dayofweek1 == '7') {
-        var d = today.getDate()
-        var m = today.getMonth() + 1
-        var y = today.getFullYear()
-          if (d == 1 && m == 1) {
-            y = y - 1
-            date1 = y + '-' + '12' + '-' + '30'
-          }
-          else if (d == 2 && m == 1) {
-            y = y - 1
-            date1 = y + '-' + '12' + '-' + '31'
-          }
-          else if (d == 1 && (m == 1 || m == 5|| m == 7|| m == 10|| m == 12)) {
-            m = m - 1
-            date1 = today.getFullYear()+'-'+ m + '-' + '29'
-          }
-          else if (d == 2 && (m == 1 || m == 5|| m == 7|| m == 10|| m == 12)) {
-            m = m - 1
-            date1 = today.getFullYear()+'-'+ m + '-' + '30'
-          }
-          else if (d == 1 && ( m == 4 || m == 6|| m == 9|| m == 11 || m == 8)) {
-            m = m - 1
-            date1 = today.getFullYear()+'-'+ m + '-' + '30'
-          }
-          else if (d == 2 && ( m == 4 || m == 6|| m == 9|| m == 11 || m == 8)) {
-            m = m - 1
-            date1 = today.getFullYear()+'-'+ m + '-' + '31'
-          }
-          else if (d == 1 && ( m == 3)) {
-            m = m - 1
-            if (y%4 == 0){
-              date1 = today.getFullYear()+'-'+ m + '-' + '28'
-            }
-            else {
-              date1 = today.getFullYear()+'-'+ m + '-' + '27'
-            }
-          }
-          else if (d == 2 && ( m == 3)) {
-            m = m - 1
-            if (y%4 == 0){
-              date1 = today.getFullYear()+'-'+ m + '-' + '29'
-            }
-            else {
-              date1 = today.getFullYear()+'-'+ m + '-' + '28'
-            }
-          }
-          else {
-            m = m - 1
-            date1 = today.getFullYear() + '-' + m.toString() + '-' + today.getDate()
-          }
-      }
-    } */ //end of calculation
-    console.log(date1)
-    //Fetch entire week based on days
-    var week = []
-    var d = today.getDate() //FIX TO SYSTEM AFTER! TEST FOR NOW
-    var m = today.getMonth() + 1
-    var y = today.getFullYear()
-    if (dayofweek1 == '6'){
-          d = d - 5
-          if (d < 1) { //take in a few days from last month, not account for cross year, fix later!!!!
-            m = m -1
-            if (m == 1 || m == 3|| m == 5|| m == 7|| m == 8|| m == 10|| m == 12) {
-              var start = 31 + d
-              for (var i = 0; i <= (0-d); ++i) {
-                console.log(start)
-                  if (start < 10 && m < 10) {
-                  week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
-                  }
-                  else if (start < 10) {
-                  week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
-                  }
-                  else if (m < 10) {
-                  week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
-                  }
-                  else {
-                    week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
-                  }
-                  start = start + 1
-              }
-            }
-            else if (m == 4|| m == 6|| m == 9|| m == 11) {
-              var start = 30 + d
-              for (var i = 0; i <= (0-d); ++i) {
-                console.log(start)
-                  if (start < 10 && m < 10) {
-                  week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
-                  }
-                  else if (start < 10) {
-                  week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
-                  }
-                  else if (m < 10) {
-                  week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
-                  }
-                  else {
-                    week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
-                  }
-                  start = start + 1
-              }
-            }
-            else { //feburary month
-              if (y%4 == 0) {
-                var start = 29 + d
-                for (var i = 0; i <= (0-d); ++i) {
-                  console.log(start)
-                    if (start < 10 && m < 10) {
-                    week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
-                    }
-                    else if (start < 10) {
-                    week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
-                    }
-                    else if (m < 10) {
-                    week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
-                    }
-                    else {
-                      week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
-                    }
-                    start = start + 1
-                }
-              }
-              else{
-                var start = 28 + d
-                for (var i = 0; i <= (0-d); ++i) {
-                  console.log(start)
-                    if (start < 10 && m < 10) {
-                    week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
-                    }
-                    else if (start < 10) {
-                    week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
-                    }
-                    else if (m < 10) {
-                    week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
-                    }
-                    else {
-                      week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
-                    }
-                    start = start + 1
-                }
-              }
-            }
-            m = m + 1
-            var start = d + 5 - (4-(0-d))
-            for (var i = 0; i < 4-(0-d); ++i) {
-              console.log(start)
-                if (start < 10 && m < 10) {
-                week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
-                }
-                else if (start < 10) {
-                week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
-                }
-                else if (m < 10) {
-                week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
-                }
-                else {
-                  week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
-                }
-                start = start + 1
-          }
-          }
-          else { //this month has enough days to cover the week
-            var start = d
-            for (var i = 0; i < 5; ++i) {
-              console.log(start)
-                if (start < 10 && m < 10) {
-                week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
-                }
-                else if (start < 10) {
-                week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
-                }
-                else if (m < 10) {
-                week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
-                }
-                else {
-                  week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
-                }
-                start = start + 1
-            }
-          }
-      }
-    else if (dayofweek1 == '7'){
-            d = d - 6
-            var end
+      console.log(date1)
+      //Fetch entire week based on days
+      var week = []
+      var d = today.getDate()
+      var m = today.getMonth() + 1
+      var y = today.getFullYear()
+      if (dayofweek1 == '6'){
+            d = d - 5
             if (d < 1) { //take in a few days from last month, not account for cross year, fix later!!!!
               m = m -1
               if (m == 1 || m == 3|| m == 5|| m == 7|| m == 8|| m == 10|| m == 12) {
+                var start = 31 + d
+                for (var i = 0; i <= (0-d); ++i) {
+                  console.log(start)
+                    if (start < 10 && m < 10) {
+                    week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
+                    }
+                    else if (start < 10) {
+                    week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
+                    }
+                    else if (m < 10) {
+                    week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
+                    }
+                    else {
+                      week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
+                    }
+                    start = start + 1
+                }
+              }
+              else if (m == 4|| m == 6|| m == 9|| m == 11) {
+                var start = 30 + d
+                for (var i = 0; i <= (0-d); ++i) {
+                  console.log(start)
+                    if (start < 10 && m < 10) {
+                    week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
+                    }
+                    else if (start < 10) {
+                    week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
+                    }
+                    else if (m < 10) {
+                    week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
+                    }
+                    else {
+                      week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
+                    }
+                    start = start + 1
+                }
+              }
+              else { //feburary month
+                if (y%4 == 0) {
+                  var start = 29 + d
+                  for (var i = 0; i <= (0-d); ++i) {
+                    console.log(start)
+                      if (start < 10 && m < 10) {
+                      week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
+                      }
+                      else if (start < 10) {
+                      week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
+                      }
+                      else if (m < 10) {
+                      week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
+                      }
+                      else {
+                        week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
+                      }
+                      start = start + 1
+                  }
+                }
+                else{
+                  var start = 28 + d
+                  for (var i = 0; i <= (0-d); ++i) {
+                    console.log(start)
+                      if (start < 10 && m < 10) {
+                      week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
+                      }
+                      else if (start < 10) {
+                      week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
+                      }
+                      else if (m < 10) {
+                      week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
+                      }
+                      else {
+                        week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
+                      }
+                      start = start + 1
+                  }
+                }
+              }
+              m = m + 1
+              var start = d + 5 - (4-(0-d))
+              for (var i = 0; i < 4-(0-d); ++i) {
+                console.log(start)
+                  if (start < 10 && m < 10) {
+                  week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
+                  }
+                  else if (start < 10) {
+                  week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
+                  }
+                  else if (m < 10) {
+                  week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
+                  }
+                  else {
+                    week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
+                  }
+                  start = start + 1
+                }
+              }
+            else { //this month has enough days to cover the week
+              var start = d
+              for (var i = 0; i < 5; ++i) {
+                console.log(start)
+                  if (start < 10 && m < 10) {
+                  week.push(today.getFullYear() + '-0' + m.toString() + '-0' + start.toString())
+                  }
+                  else if (start < 10) {
+                  week.push(today.getFullYear() + '-' + m.toString() + '-0' + start.toString())
+                  }
+                  else if (m < 10) {
+                  week.push(today.getFullYear() + '-0' + m.toString() + '-' + start.toString())
+                  }
+                  else {
+                    week.push(today.getFullYear() + '-' + m.toString() + '-' + start.toString())
+                  }
+                  start = start + 1
+              }
+            }
+        }
+        else if (dayofweek1 == '7'){
+            d = d - 6
+            var end
+            if (d < 1) {
+              m = m -1
+              if (m == 1 || m == 3|| m == 5|| m == 7|| m == 8|| m == 10|| m == 12) { // month with 31 days
                 var start = 31 + d
                 if ((0-d) > 4) {
                   end = 4
@@ -352,7 +260,7 @@ export default class Home extends Component<{}> {
                       start = start + 1
                   }
                 }
-                else{
+                else {
                   var start = 28 + d
                   for (var i = 0; i <= (0-d); ++i) {
                     console.log(start)
@@ -549,7 +457,7 @@ export default class Home extends Component<{}> {
         for (var i = 0; i < week.length; ++i){
           console.log('inside my week array ' + week[i])
         }
-//use week array to determine last working day when used on weekends, yesterday does not skip back to last year
+        //use week array to determine last working day when used on weekends, yesterday does not skip back to last year
         var yesterday
         if (dayofweek1 == '6' || dayofweek1 == '7') {
           date1 = week[week.length-1]
@@ -839,7 +747,9 @@ export default class Home extends Component<{}> {
                 m1 = m1 + 1
           }
         }
-    //var dow =test1.day();
+
+    // determine the hour the app is run at
+
     var ch
     var istoday
     var h = today.getHours()
@@ -947,7 +857,7 @@ export default class Home extends Component<{}> {
                         var  close_price = parseInt(response['Time Series (1min)']
                                                           [this.state.date + ' '+this.state.hour +':00'+this.state.time]
                                                           ['4. close'],10)
-                        SampleArray.push(close_price);
+                      SampleArray.push(close_price);
                       console.log(close_price)
                       console.log(min)
                     }
@@ -957,7 +867,7 @@ export default class Home extends Component<{}> {
                         var  close_price = parseInt(response['Time Series (1min)']
                                                           [this.state.date + ' '+ this.state.hour +':0'+this.state.minute+this.state.time]
                                                           ['4. close'],10)
-                        SampleArray.push(close_price);
+                      SampleArray.push(close_price);
                       min = min + 1;
                       this.setState({minute: min.toString()})
                       console.log(close_price)
@@ -970,10 +880,10 @@ export default class Home extends Component<{}> {
                                                         [this.state.date + ' ' + this.state.hour +':'+this.state.minute+this.state.time]
                                                         ['4. close'],10)
                         SampleArray.push(close_price);
-                      min = min + 1;
-                      this.setState({minute: min.toString()})
-                      console.log(close_price)
-                      console.log(min)
+                        min = min + 1;
+                        this.setState({minute: min.toString()})
+                        console.log(close_price)
+                        console.log(min)
                     }
                   }
                 }
@@ -1134,7 +1044,7 @@ export default class Home extends Component<{}> {
                         var  close_price = parseInt(response['Time Series (1min)']
                                                           [this.state.date + ' '+this.state.hour +':00'+this.state.time]
                                                           ['4. close'],10)
-                        SampleArray.push(close_price);
+                      SampleArray.push(close_price);
                       console.log(close_price)
                       console.log(min)
                     }
@@ -1144,7 +1054,7 @@ export default class Home extends Component<{}> {
                         var  close_price = parseInt(response['Time Series (1min)']
                                                           [this.state.date + ' '+ this.state.hour +':0'+this.state.minute+this.state.time]
                                                           ['4. close'],10)
-                        SampleArray.push(close_price);
+                      SampleArray.push(close_price);
                       min = min + 1;
                       this.setState({minute: min.toString()})
                       console.log(close_price)
@@ -1156,7 +1066,7 @@ export default class Home extends Component<{}> {
                         var  close_price = parseInt(response['Time Series (1min)']
                                                         [this.state.date + ' ' + this.state.hour +':'+this.state.minute+this.state.time]
                                                         ['4. close'],10)
-                        SampleArray.push(close_price);
+                      SampleArray.push(close_price);
                       min = min + 1;
                       this.setState({minute: min.toString()})
                       console.log(close_price)
@@ -1186,7 +1096,7 @@ export default class Home extends Component<{}> {
   }
 
   render() {
-	const data = [ 10, 0, 10, 10, -50, -80, 70, 80] //sample data
+	const data = [ 10, 0, 10, 10, -50, -80, 70, 80] //sample mock data
   const contentInset = { top: 5, bottom: 5}
   const contentInset2 = { left: 5, right: 5}
     return (
@@ -1501,7 +1411,7 @@ export default class Home extends Component<{}> {
                                     )
 
                               }
-                              else if (this.state.todayh==false) {
+                                else if (this.state.todayh==false) {
                                 fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=1min&outputsize=full&apikey=V9TWS1DHAOGM19LS')
                                   .then((response) => response.json())
                                   .then(
@@ -1555,65 +1465,8 @@ export default class Home extends Component<{}> {
                                     )
                                     console.log(this.state.currenthour)
                               }
-                              /*else {
-                                this.setState({currenthour: '16'})
-                                fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=1min&outputsize=full&apikey=V9TWS1DHAOGM19LS')
-                                  .then((response) => response.json())
-                                  .then(
-                                    (response) => {
-                                      var SampleArray = [];
-                                      var hr = parseInt(this.state.currenthour, 10) - 1
-                                      this.setState({currenthour: hr.toString()})
-                                      var min = 1;
-                                      for (var i=0; i < 1 ; i++) {
-                                        for (var j = 0; j < 59; ++j) {
-                                          if (j == 0){
-                                              var  close_price = parseInt(response['Time Series (1min)']
-                                                                                [this.state.date + ' '+this.state.currenthour +':00'+this.state.time]
-                                                                                ['4. close'],10)
-                                            SampleArray.push(close_price);
-                                            console.log(close_price)
-                                            console.log(min)
-                                          }
-                                          else if ( j < 10) {
-                                              var  close_price = parseInt(response['Time Series (1min)']
-                                                                                [this.state.date + ' '+ this.state.currenthour +':0'+this.state.minute+this.state.time]
-                                                                                ['4. close'],10)
-                                            SampleArray.push(close_price);
-                                            min = min + 1;
-                                            this.setState({minute: min.toString()})
-                                            console.log(close_price)
-                                            console.log(min)
-                                          }
-                                          else {
-                                              var  close_price = parseInt(response['Time Series (1min)']
-                                                                              [this.state.date + ' ' + this.state.currenthour +':'+this.state.minute+this.state.time]
-                                                                              ['4. close'],10)
-                                            SampleArray.push(close_price);
-                                            min = min + 1;
-                                            this.setState({minute: min.toString()})
-                                            console.log(close_price)
-                                            console.log(min)
-                                          }
-                                        }
-                                        min = 1;
-                                        this.setState({minute: min.toString()})
-                                        console.log(this.state.minute)
-                                        //console.log(close_price)
-                                        //this.setState({price: close_price})
-                                      }
-                                      this.setState({apidata2: SampleArray})
-                                      console.log(this.state.currenthour)
-                                      console.log('correct case')
-                                    }).catch(
-                                      (error) => {
-                                        console.log(error);
-                                      }
-                                    )
-
-                              }*/ //dont need the else case for now
-             }}
-            >
+                            }
+                          }>
               <Text style={{fontSize: 10,
                             color: '#000000',
             	              fontWeight: "bold",
@@ -1749,8 +1602,9 @@ export default class Home extends Component<{}> {
                           console.log(error);
                         }
                       )
-                }}}
-            >
+                    }
+                  }
+                }>
               <Text style={{fontSize: 10,
                             color: '#000000',
                             fontWeight: "bold",
@@ -1815,16 +1669,17 @@ export default class Home extends Component<{}> {
                                   if (response['Time Series (Daily)'][this.state.lastmonth[i]]) {
                                    var  close_price = parseInt(response['Time Series (Daily)'][this.state.lastmonth[i]]['4. close'],10)
                                    SampleArray.push(close_price);
-                                  console.log(close_price)
+                                   console.log(close_price)
                                   }
                                 }
                              this.setState({apidata2: SampleArray})
                              }).catch(
-                             (error) => {
-                              console.log(error);
-                            }
-                   ) }}
-            >
+                               (error) => {
+                                console.log(error);
+                              }
+                            )
+                          }
+                        }>
               <Text style={{fontSize: 10,
                             color: '#000000',
                             fontWeight: "bold",
@@ -1854,11 +1709,12 @@ export default class Home extends Component<{}> {
                                 }
                              this.setState({apidata2: SampleArray})
                              }).catch(
-                             (error) => {
-                              console.log(error);
-                            }
-                   ) }}
-            >
+                                 (error) => {
+                                  console.log(error);
+                                  }
+                                )
+                              }
+                            }>
               <Text style={{fontSize: 10,
                             color: '#000000',
                             fontWeight: "bold",
